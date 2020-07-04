@@ -1,13 +1,17 @@
 package com.learn.personal.githubuserapp
 
-import android.content.res.TypedArray
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.learn.personal.githubuserapp.databinding.ActivityMainBinding
 import com.learn.personal.githubuserapp.model.UserModel
 import com.learn.personal.githubuserapp.recyclerview.adapter.UserAdapter
+import com.learn.personal.githubuserapp.utils.getJsonDataFromAsset
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,41 +25,24 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main
         )
 
-        getUserData()
+        supportActionBar!!.title = "GitHub"
 
-        val adapter = UserAdapter(userDataSet)
+        getUserDataViaJson()
+
+        val adapter = UserAdapter(userDataSet, applicationContext)
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         binding.recyclerView.adapter = adapter
     }
 
-    fun getUserData () {
+    private fun getUserDataViaJson () {
+        val jsonFileString = getJsonDataFromAsset(applicationContext, "githubuser.json")
 
-        val name: Array<String> = resources.getStringArray(R.array.name)
-        val username: Array<String> = resources.getStringArray(R.array.username)
-        val followers: Array<String> = resources.getStringArray(R.array.followers)
-        val following: Array<String> = resources.getStringArray(R.array.following)
-        val location: Array<String> = resources.getStringArray(R.array.location)
-        val repository: Array<String> = resources.getStringArray(R.array.repository)
-        val company: Array<String> = resources.getStringArray(R.array.company)
-        val avatar: TypedArray = resources.obtainTypedArray(R.array.avatar)
+        val jsonFileObject: JSONObject = JSONObject(jsonFileString)
 
-        val users = arrayListOf<UserModel>()
+        val arrayListUserType = object : TypeToken<ArrayList<UserModel>>() {}.type
+        userDataSet = Gson().fromJson(jsonFileObject.getJSONArray("users").toString(), arrayListUserType)
 
-        for (position in name.indices) {
-            val user = UserModel(
-                username[position],
-                name[position],
-                avatar.getResourceId(position, -1),
-                company[position],
-                location[position],
-                repository[position],
-                "Followers: " + followers[position],
-                "Following: " + following[position]
-            )
-            users.add(user)
-        }
-
-        userDataSet = users
+        userDataSet.forEachIndexed { index, user -> Log.i("data", "> Item $index:\n$user") }
     }
 
     override fun onSupportNavigateUp(): Boolean {
