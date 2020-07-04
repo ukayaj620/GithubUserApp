@@ -1,11 +1,13 @@
 package com.learn.personal.githubuserapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.learn.personal.githubuserapp.databinding.ActivityUserDetailBinding
 import com.learn.personal.githubuserapp.model.UserModel
+
 
 class UserDetailActivity : AppCompatActivity() {
 
@@ -22,6 +24,13 @@ class UserDetailActivity : AppCompatActivity() {
 
         val user = intent.getParcelableExtra(DATA) as UserModel
         supportActionBar!!.title = "GitHub User"
-        binding.name.text = user.name
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        binding.avatar.setImageResource(resources.getIdentifier(user.avatar, "drawable", packageName))
+        // binding.name.text = user.name
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

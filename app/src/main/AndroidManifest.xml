@@ -9,8 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GitMe">
-        <activity android:name=".UserDetailActivity"></activity>
-        <activity android:name=".UserListActivity" />
+        <activity android:name=".UserDetailActivity"
+            android:parentActivityName=".MainActivity"
+            >
+        </activity>
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.GitMe.SplashScreen">
