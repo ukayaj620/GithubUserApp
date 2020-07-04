@@ -25,8 +25,14 @@ class UserDetailActivity : AppCompatActivity() {
         val user = intent.getParcelableExtra(DATA) as UserModel
         supportActionBar!!.title = "GitHub User"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        binding.name.text = user.name
+        binding.username.text = user.username
         binding.avatar.setImageResource(resources.getIdentifier(user.avatar, "drawable", packageName))
-        // binding.name.text = user.name
+        binding.company.text = user.company
+        binding.location.text = user.location
+        binding.repository.text = user.repository
+        binding.followers.text = user.follower
+        binding.following.text = user.following
     }
 
     override fun onSupportNavigateUp(): Boolean {

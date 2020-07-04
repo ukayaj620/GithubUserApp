@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Github User App</string>
     <string name="star">Star</string>
-    <string name="dummy_followers">Followers: 0</string>
+    <string name="dummy_followers">0</string>
+    <string name="dummy_following">0</string>
+    <string name="dummy_company">GitMe Inc.</string>
+    <string name="dummy_location">Jakarta</string>
+    <string name="dummy_repository">100</string>
     <string name="dummy_name">OctoCat</string>
+    <string name="dummy_username">octonamawee</string>
+    <string name="repository">Repository</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="company_vector">company vector</string>
+    <string name="location_vector">location vector</string>
 </resources>
